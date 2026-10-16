@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PontoAlto Viagens — folha de estilo
+   Agência de Viagens — folha de estilo
    Paleta em escala de cinza (as fotos são o único ponto de cor)
    ========================================================================== */
 
@@ -53,4 +53,345 @@ h3 {
   font-family: var(--serif);
   font-weight: 300;
   line-height: 1.2;
+}
+
+/* ---- Estruturas reutilizáveis ---- */
+.container { width: 100%; max-width: var(--max-largura); margin: 0 auto; padding: 0 1.5rem; }
+.container--narrow { max-width: 680px; }
+.center { text-align: center; }
+
+.section { padding: var(--espaco-secao) 0; }
+.section--alt { background: var(--cinza-claro); }
+
+.eyebrow {
+  font-weight: 300;
+  font-size: .72rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--cinza-medio);
+  margin-bottom: 1rem;
+}
+
+.section__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(1.85rem, 4.5vw, 2.75rem);
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.lead { color: var(--cinza-medio); margin-bottom: 2.5rem; }
+
+/* Espaço reservado para fotos: troque por <img> quando tiver as imagens */
+.placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  background: var(--cinza-linha);
+  color: var(--cinza-medio);
+  font-size: .72rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   1. HERO
+   ========================================================================== */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4.5rem 1rem 3.5rem;
+  /* Gradiente radial suave + textura de grão */
+  background-color: var(--branco);
+  background-image:
+    radial-gradient(ellipse 70% 60% at 50% 48%,
+      rgba(138,138,138,.055) 0%,
+      rgba(138,138,138,.022) 45%,
+      rgba(255,255,255,0) 78%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 100%, 220px 220px;
+}
+
+.hero__marca {
+  font-size: clamp(2.6rem, 8vw, 4.5rem);
+  letter-spacing: .04em;
+  color: var(--grafite);
+}
+
+.hero__sub {
+  margin-top: .75rem;
+  font-size: .78rem;
+  letter-spacing: .36em;
+  text-transform: uppercase;
+  color: var(--cinza-medio);
+}
+
+/* ==========================================================================
+   MENU SANDUÍCHE — botão redondo fixo + painel lateral
+   Fechado, o painel usa visibility:hidden (e não só transform): isso o tira
+   da ordem de tabulação, senão o teclado entraria em links invisíveis.
+   ========================================================================== */
+.menu-btn {
+  position: fixed;
+  top: 1.25rem; left: 1.25rem;
+  z-index: 60;
+  width: 48px; height: 48px;
+  display: grid; place-items: center;
+  border: 1px solid var(--cinza-medio);
+  border-radius: 50%;
+  background: rgba(255,255,255,.9);
+  color: var(--grafite);
+  cursor: pointer;
+  transition: background .3s ease, color .3s ease, border-color .3s ease;
+}
+.menu-btn:hover { background: var(--grafite); color: var(--branco); border-color: var(--grafite); }
+.menu-btn svg { width: 20px; height: 20px; display: block; }
+.menu-btn .icone-fechar { display: none; }
+.menu-btn.is-open .icone-abrir { display: none; }
+.menu-btn.is-open .icone-fechar { display: block; }
+
+.menu-overlay {
+  position: fixed; inset: 0;
+  z-index: 50;
+  background: rgba(20,20,20,.35);
+  opacity: 0; visibility: hidden;
+  transition: opacity .3s ease, visibility .3s ease;
+}
+.menu-overlay.is-open { opacity: 1; visibility: visible; }
+
+.menu-painel {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 55;
+  width: min(320px, 82vw);
+  padding: 6.5rem 2rem 2rem;
+  background: var(--branco);
+  border-right: 1px solid var(--cinza-linha);
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition: transform .35s cubic-bezier(.22,.61,.36,1), visibility .35s;
+}
+.menu-painel.is-open { transform: none; visibility: visible; }
+.menu-painel ul { list-style: none; }
+.menu-painel a {
+  display: block;
+  padding: .95rem 0;
+  border-bottom: 1px solid var(--cinza-linha);
+  font-size: .72rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--cinza-medio);
+  text-decoration: none;
+  transition: color .3s ease;
+}
+.menu-painel a:hover { color: var(--grafite); }
+
+/* Trava a rolagem do fundo enquanto o painel está aberto. */
+body.menu-aberto { overflow: hidden; }
+
+/* ==========================================================================
+   2. SOBRE MIM
+   ========================================================================== */
+.about {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+}
+
+/* Moldura da foto em retrato 2:3 */
+.about__photo-wrap {
+  width: min(280px, 70vw);
+  aspect-ratio: 2 / 3;
+  border: 1px solid var(--cinza-medio);
+  padding: 8px;
+  flex-shrink: 0;
+}
+.about__photo-wrap .placeholder { height: 100%; }
+.about__photo {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(15%);
+}
+
+.about__text p + p { margin-top: 1rem; }
+.about__text p { color: var(--grafite); }
+
+/* Citação de destaque: serifada, itálica, com um fio vertical */
+.about__quote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.45rem, 3.4vw, 1.9rem);
+  line-height: 1.35;
+  color: var(--grafite);
+  max-width: 32ch;
+  margin: 2.5rem 0 0;
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--cinza-medio);
+}
+
+/* ==========================================================================
+   3. DESTINOS (carrossel)
+   ========================================================================== */
+.gallery { position: relative; margin-top: 3.5rem; padding: 0 1.5rem; }
+.gallery .swiper { overflow: hidden; }
+
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid var(--cinza-linha);
+  background: var(--cinza-claro);
+}
+.card img,
+.card .placeholder {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+}
+.card img {
+  object-fit: cover;
+  transition: transform .8s cubic-bezier(.22,.61,.36,1);
+}
+.card:hover img { transform: scale(1.03); }
+
+/* Gradiente escuro só na base do card, para o nome do lugar */
+.card__caption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 3.5rem 1.5rem 1.4rem;
+  background: linear-gradient(to top, rgba(20,20,20,.82), rgba(20,20,20,.35) 55%, rgba(20,20,20,0));
+  color: #fff;
+}
+.card__caption h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.7rem;
+  line-height: 1.2;
+}
+
+/* Dots finos */
+.gallery__dots {
+  display: flex; justify-content: center; gap: .55rem;
+  margin-top: 2rem;
+}
+.gallery__dots .swiper-pagination-bullet {
+  width: 22px; height: 1px;
+  border-radius: 0;
+  background: var(--cinza-medio);
+  opacity: .4;
+  transition: opacity .3s ease, background .3s ease;
+  margin: 0 !important;
+}
+.gallery__dots .swiper-pagination-bullet-active { opacity: 1; background: var(--grafite); }
+
+/* Setas (somente desktop) */
+.nav-arrow {
+  display: none;
+  position: absolute; top: 42%;
+  width: 44px; height: 44px;
+  border: 1px solid var(--cinza-medio);
+  border-radius: 50%;
+  background: rgba(255,255,255,.85);
+  cursor: pointer;
+  z-index: 5;
+  transition: border-color .3s ease, background .3s ease;
+}
+.nav-arrow::before {
+  content: "";
+  position: absolute; top: 50%; left: 50%;
+  width: 8px; height: 8px;
+  border-top: 1px solid var(--grafite);
+  border-right: 1px solid var(--grafite);
+}
+.nav-arrow--next::before { transform: translate(-65%, -50%) rotate(45deg); }
+.nav-arrow--prev::before { transform: translate(-35%, -50%) rotate(-135deg); }
+.nav-arrow:hover { background: #fff; border-color: var(--grafite); }
+.nav-arrow.swiper-button-disabled { opacity: .25; cursor: default; }
+
+/* ==========================================================================
+   4. CONTATO E RODAPÉ
+   ========================================================================== */
+/* O próprio logo do WhatsApp é o botão; o hover levanta de leve */
+.btn-whats {
+  display: inline-block;
+  line-height: 0;
+  border-radius: 50%;
+  transition: transform .3s ease, filter .3s ease;
+}
+.btn-whats svg { width: 56px; height: 56px; display: block; }
+.btn-whats:hover { transform: translateY(-2px); filter: brightness(1.06); }
+.btn-whats:focus-visible { outline: 2px solid var(--grafite); outline-offset: 6px; }
+
+.contact__mail { margin-top: 2rem; color: var(--cinza-medio); font-size: .95rem; }
+.contact__mail a { color: var(--cinza-medio); text-decoration: none; border-bottom: 1px solid var(--cinza-linha); }
+.contact__mail a:hover { color: var(--grafite); }
+
+.footer {
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+  border-top: 1px solid var(--cinza-linha);
+  background: var(--branco);
+}
+.footer p { font-size: .75rem; letter-spacing: .1em; color: var(--cinza-medio); }
+
+/* ==========================================================================
+   Animação suave de entrada no scroll
+   ========================================================================== */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ==========================================================================
+   Media queries (mobile-first)
+   ========================================================================== */
+@media (min-width: 768px) {
+  :root { --espaco-secao: 4.25rem; }
+
+  /* Texto contornando a foto: float à direita; flow-root contém o float */
+  .about {
+    display: flow-root;
+    text-align: left;
+    max-width: 900px;
+  }
+  .about__photo-wrap {
+    float: right;
+    width: 340px;
+    margin: .5rem 0 1.5rem 3rem;
+  }
+
+  .card__caption { padding: 4.5rem 2rem 1.8rem; }
+  .card__caption h3 { font-size: 2rem; }
+}
+
+@media (min-width: 1024px) {
+  /* No desktop o painel vira uma coluna permanente; o botão e o overlay somem */
+  .menu-btn,
+  .menu-overlay { display: none; }
+
+  .menu-painel {
+    transform: none;
+    visibility: visible;
+    width: 260px;
+    padding: 3.25rem 2rem 2rem;
+    overflow-y: auto;
+  }
+
+  /* O painel é fixed e não empurra nada: abre espaço para a coluna */
+  body { padding-left: 260px; }
+  body.menu-aberto { overflow: auto; }
+
+  .nav-arrow { display: block; }
+  .nav-arrow--prev { left: .5rem; }
+  .nav-arrow--next { right: .5rem; }
 }

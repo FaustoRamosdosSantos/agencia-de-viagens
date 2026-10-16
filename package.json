@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "vite": "^8.3.4"
+  },
+  "dependencies": {
+    "swiper": "^14.3.0"
   }
 }
