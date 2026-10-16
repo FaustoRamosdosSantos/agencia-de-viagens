@@ -1,0 +1,56 @@
+/* ==========================================================================
+   PontoAlto Viagens — folha de estilo
+   Paleta em escala de cinza (as fotos são o único ponto de cor)
+   ========================================================================== */
+
+/* ---- Variáveis: cores, fontes e medidas em um lugar só ---- */
+:root {
+  --branco: #ffffff;
+  --cinza-claro: #f5f5f5;
+  --cinza-linha: #ededed;
+  --cinza-medio: #9a9a9a;
+  --grafite: #4a4a4a;
+
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  --espaco-secao: 3.25rem;
+  --max-largura: 1120px;
+}
+
+/* ---- Reset básico ---- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---- Base do documento ---- */
+body {
+  background: var(--branco);
+  color: var(--grafite);
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--serif);
+  font-weight: 300;
+  line-height: 1.2;
+}
