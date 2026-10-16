@@ -1,0 +1,18 @@
+# Dependências
+node_modules
+
+# Build
+dist
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+
+# Logs e variáveis locais
+*.log
+*.local
