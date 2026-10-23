@@ -1,12 +1,13 @@
 // Seção "Sobre mim": foto (placeholder), texto de apresentação e citação.
+const base = import.meta.env.BASE_URL
+
 export function sobre() {
   return `
 <section class="section section--alt" id="sobre">
   <div class="container about">
 
     <div class="about__photo-wrap reveal">
-      <!-- placeholder da foto: troque por <img class="about__photo" src="..." alt="Retrato de Fausto Ramos"> -->
-      <div class="placeholder">foto</div>
+      <img class="about__photo" src="${base}foto-fausto-ramos.jpeg" alt="Retrato de Fausto Ramos" loading="lazy" />
     </div>
 
     <div class="about__text reveal">

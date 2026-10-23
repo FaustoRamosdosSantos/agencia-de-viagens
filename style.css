@@ -130,71 +130,10 @@ h3 {
   color: var(--cinza-medio);
 }
 
-/* ==========================================================================
-   MENU SANDUÍCHE — botão redondo fixo + painel lateral
-   Fechado, o painel usa visibility:hidden (e não só transform): isso o tira
-   da ordem de tabulação, senão o teclado entraria em links invisíveis.
-   ========================================================================== */
-.menu-btn {
-  position: fixed;
-  top: 1.25rem; left: 1.25rem;
-  z-index: 60;
-  width: 48px; height: 48px;
-  display: grid; place-items: center;
-  border: 1px solid var(--cinza-medio);
-  border-radius: 50%;
-  background: rgba(255,255,255,.9);
-  color: var(--grafite);
-  cursor: pointer;
-  transition: background .3s ease, color .3s ease, border-color .3s ease;
-}
-.menu-btn:hover { background: var(--grafite); color: var(--branco); border-color: var(--grafite); }
-.menu-btn svg { width: 20px; height: 20px; display: block; }
-.menu-btn .icone-fechar { display: none; }
-.menu-btn.is-open .icone-abrir { display: none; }
-.menu-btn.is-open .icone-fechar { display: block; }
 
-.menu-overlay {
-  position: fixed; inset: 0;
-  z-index: 50;
-  background: rgba(20,20,20,.35);
-  opacity: 0; visibility: hidden;
-  transition: opacity .3s ease, visibility .3s ease;
-}
-.menu-overlay.is-open { opacity: 1; visibility: visible; }
-
-.menu-painel {
-  position: fixed;
-  top: 0; left: 0; bottom: 0;
-  z-index: 55;
-  width: min(320px, 82vw);
-  padding: 6.5rem 2rem 2rem;
-  background: var(--branco);
-  border-right: 1px solid var(--cinza-linha);
-  transform: translateX(-100%);
-  visibility: hidden;
-  transition: transform .35s cubic-bezier(.22,.61,.36,1), visibility .35s;
-}
-.menu-painel.is-open { transform: none; visibility: visible; }
-.menu-painel ul { list-style: none; }
-.menu-painel a {
-  display: block;
-  padding: .95rem 0;
-  border-bottom: 1px solid var(--cinza-linha);
-  font-size: .72rem;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: var(--cinza-medio);
-  text-decoration: none;
-  transition: color .3s ease;
-}
-.menu-painel a:hover { color: var(--grafite); }
-
-/* Trava a rolagem do fundo enquanto o painel está aberto. */
-body.menu-aberto { overflow: hidden; }
 
 /* ==========================================================================
-   2. SOBRE MIM
+   1. SOBRE MIM
    ========================================================================== */
 .about {
   display: grid;
@@ -239,7 +178,7 @@ body.menu-aberto { overflow: hidden; }
 }
 
 /* ==========================================================================
-   3. DESTINOS (carrossel)
+   2. DESTINOS (carrossel)
    ========================================================================== */
 .gallery { position: relative; margin-top: 3.5rem; padding: 0 1.5rem; }
 .gallery .swiper { overflow: hidden; }
@@ -317,7 +256,7 @@ body.menu-aberto { overflow: hidden; }
 .nav-arrow.swiper-button-disabled { opacity: .25; cursor: default; }
 
 /* ==========================================================================
-   4. CONTATO E RODAPÉ
+   3. CONTATO E RODAPÉ
    ========================================================================== */
 /* O próprio logo do WhatsApp é o botão; o hover levanta de leve */
 .btn-whats {
@@ -375,22 +314,6 @@ body.menu-aberto { overflow: hidden; }
 }
 
 @media (min-width: 1024px) {
-  /* No desktop o painel vira uma coluna permanente; o botão e o overlay somem */
-  .menu-btn,
-  .menu-overlay { display: none; }
-
-  .menu-painel {
-    transform: none;
-    visibility: visible;
-    width: 260px;
-    padding: 3.25rem 2rem 2rem;
-    overflow-y: auto;
-  }
-
-  /* O painel é fixed e não empurra nada: abre espaço para a coluna */
-  body { padding-left: 260px; }
-  body.menu-aberto { overflow: auto; }
-
   .nav-arrow { display: block; }
   .nav-arrow--prev { left: .5rem; }
   .nav-arrow--next { right: .5rem; }

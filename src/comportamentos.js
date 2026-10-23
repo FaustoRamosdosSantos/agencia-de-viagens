@@ -48,51 +48,9 @@ function iniciarReveal() {
   alvos.forEach((el) => observador.observe(el))
 }
 
-function iniciarMenu() {
-  const botao = document.getElementById('menuBtn')
-  const painel = document.getElementById('menuPainel')
-  const overlay = document.getElementById('menuOverlay')
 
-  if (!botao || !painel || !overlay) return
-
-  const abrir = () => {
-    botao.classList.add('is-open')
-    painel.classList.add('is-open')
-    overlay.classList.add('is-open')
-    botao.setAttribute('aria-expanded', 'true')
-    botao.setAttribute('aria-label', 'Fechar menu')
-    document.body.classList.add('menu-aberto')
-  }
-
-  const fechar = () => {
-    botao.classList.remove('is-open')
-    painel.classList.remove('is-open')
-    overlay.classList.remove('is-open')
-    botao.setAttribute('aria-expanded', 'false')
-    botao.setAttribute('aria-label', 'Abrir menu')
-    document.body.classList.remove('menu-aberto')
-  }
-
-  botao.addEventListener('click', () => {
-    if (painel.classList.contains('is-open')) fechar()
-    else abrir()
-  })
-
-  overlay.addEventListener('click', fechar)
-
-  // Numa página única, clicar num item do menu leva à seção e fecha o painel
-  painel.querySelectorAll('a').forEach((link) => link.addEventListener('click', fechar))
-
-  document.addEventListener('keydown', (evento) => {
-    if (evento.key === 'Escape' && painel.classList.contains('is-open')) {
-      fechar()
-      botao.focus()
-    }
-  })
-}
 
 export function iniciarComportamentos() {
   iniciarCarrossel()
   iniciarReveal()
-  iniciarMenu()
 }
